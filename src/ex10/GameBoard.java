@@ -3,7 +3,8 @@ package ex10;
 // Singleton Pattern: GameBoard
 public class GameBoard {
     private static final GameBoard instance = new GameBoard();
-    private char[][] grid;
+    private static final GameLogic logic = new SimpleGameLogic();
+    private static char[][] grid;
 
     private GameBoard() {
         grid = new char[3][3];
@@ -19,7 +20,7 @@ public class GameBoard {
         return instance;
     }
 
-    public void displayBoard() {
+    public static void displayBoard() {
         // Display the current state of the board
         // (You can customize the format based on your preference)
         System.out.println("-------------");
@@ -37,8 +38,17 @@ public class GameBoard {
         return grid;
     }
 
-    public void makeMove(int row, int col, char symbol) {
+    public static GameLogic getLogic() {
+        return logic;
+    }
+
+    public void makeMove(int row, int col, char symbol) throws IllegalMoveException{
         // Update the grid with the player's move
-        grid[row][col] = symbol;
+        if(grid[row][col] == ' ' && row >= 0 && row < 3 && col >= 0 && col <3){
+            grid[row][col] = symbol;
+        }
+        else{
+            throw new IllegalMoveException();
+        }
     }
 }

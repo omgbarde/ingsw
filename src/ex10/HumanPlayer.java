@@ -25,7 +25,6 @@ public class HumanPlayer extends Player {
                 col = scanner.nextInt();
 
                 client.sendMessage("MOVE " + row + " " + col);
-
                 break;
             } catch (Exception e) {
                 System.out.println("Invalid input. Please enter valid integers for row and column.");
@@ -36,6 +35,21 @@ public class HumanPlayer extends Player {
         // Update the game board with the move
         // Assuming there is a method like makeMove(row, col) in the game board
         // You need to adapt this part based on your actual implementation
-        GameBoard.getInstance().makeMove(row, col, symbol);
+        try {
+            GameBoard.getInstance().makeMove(row, col, symbol);
+            GameBoard.displayBoard();
+            if(GameBoard.getLogic().checkWin(GameBoard.getInstance().getGrid(),Player.getSymbol())){
+                client.sendMessage("vince " + Player.getSymbol());
+                return;
+            }
+            if(GameBoard.getLogic().checkDraw(GameBoard.getInstance().getGrid())){
+                client.sendMessage("PAREGGIO");
+                return;
+            }
+
+        }
+        catch (IllegalMoveException e){
+            System.out.println("illegal move");
+        }
     }
 }

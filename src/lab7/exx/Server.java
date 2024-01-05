@@ -8,7 +8,7 @@ public class Server {
 
     public static void main(String[] args) {
         try {
-            ServerSocket serverSocket = new ServerSocket(12345);
+            ServerSocket serverSocket = new ServerSocket(12333);
             Game game = new Game();
             while(true) {
                 Socket clientSocket = serverSocket.accept();
