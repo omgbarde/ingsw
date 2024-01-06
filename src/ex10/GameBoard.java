@@ -3,8 +3,10 @@ package ex10;
 // Singleton Pattern: GameBoard
 public class GameBoard {
     private static final GameBoard instance = new GameBoard();
-    private static final GameLogic logic = new SimpleGameLogic();
+    //game logic can be changed
+    private static GameLogic logic = new SimpleGameLogic();
     private static char[][] grid;
+    private static char currentTurn = 'X';
 
     private GameBoard() {
         grid = new char[3][3];
@@ -42,13 +44,27 @@ public class GameBoard {
         return logic;
     }
 
-    public void makeMove(int row, int col, char symbol) throws IllegalMoveException{
+    public synchronized void makeMove(int row, int col, char symbol) throws IllegalMoveException{
         // Update the grid with the player's move
         if(grid[row][col] == ' ' && row >= 0 && row < 3 && col >= 0 && col <3){
-            grid[row][col] = symbol;
+            placeSymbol(symbol,row,col);
+            if(currentTurn == 'X') setTurn('O') ;
+            else setTurn('X');
+            instance.displayBoard();
         }
         else{
             throw new IllegalMoveException();
         }
+    }
+
+    public synchronized char getCurrentTurn(){
+        return currentTurn;
+    }
+
+    private synchronized void setTurn(char t){
+        currentTurn = t;
+    }
+    private void placeSymbol(char s, int i, int j){
+        grid[i][j] = s;
     }
 }

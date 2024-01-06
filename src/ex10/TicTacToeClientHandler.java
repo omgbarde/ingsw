@@ -24,7 +24,6 @@ public class TicTacToeClientHandler implements Runnable {
     public void run() {
         // Example: Register the client as an observer
         server.registerClient(this);
-
         try {
             while (true) {
                 String message = in.readLine();

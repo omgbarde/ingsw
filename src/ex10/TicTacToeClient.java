@@ -40,7 +40,6 @@ public class TicTacToeClient {
         in.close();
         out.close();
     }
-
     public static void main(String[] args) {
         try {
             // Example: Create a client with a simple observer
