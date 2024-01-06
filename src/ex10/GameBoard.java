@@ -18,7 +18,7 @@ public class GameBoard {
         }
     }
 
-    public static GameBoard getInstance() {
+    public synchronized static GameBoard getInstance() {
         return instance;
     }
 
@@ -58,13 +58,13 @@ public class GameBoard {
     }
 
     public synchronized char getCurrentTurn(){
-        return currentTurn;
+        return instance.currentTurn;
     }
 
     private synchronized void setTurn(char t){
-        currentTurn = t;
+        instance.currentTurn = t;
     }
     private void placeSymbol(char s, int i, int j){
-        grid[i][j] = s;
+        instance.grid[i][j] = s;
     }
 }
