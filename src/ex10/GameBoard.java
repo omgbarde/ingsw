@@ -2,10 +2,11 @@ package ex10;
 
 // Singleton Pattern: GameBoard
 public class GameBoard {
-    private static final GameBoard instance = new GameBoard();
+    private static GameBoard instance = new GameBoard();
     //game logic can be changed
     private static GameLogic logic = new SimpleGameLogic();
     private static char[][] grid;
+    //X always starts
     private static char currentTurn = 'X';
 
     private GameBoard() {
@@ -50,7 +51,8 @@ public class GameBoard {
             placeSymbol(symbol,row,col);
             if(currentTurn == 'X') setTurn('O') ;
             else setTurn('X');
-            instance.displayBoard();
+            displayBoard();
+            notify();
         }
         else{
             throw new IllegalMoveException();
@@ -58,13 +60,13 @@ public class GameBoard {
     }
 
     public synchronized char getCurrentTurn(){
-        return instance.currentTurn;
+        return currentTurn;
     }
 
     private synchronized void setTurn(char t){
-        instance.currentTurn = t;
+        currentTurn = t;
     }
     private void placeSymbol(char s, int i, int j){
-        instance.grid[i][j] = s;
+        grid[i][j] = s;
     }
 }

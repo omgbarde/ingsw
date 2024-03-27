@@ -11,7 +11,6 @@ public class Student extends Person {
 
     private int id;
     private List<Grade> grades;
-
     public Student(String name, String surname, Date birthday) {
         super(name, surname, birthday);
         this.id = 0;
